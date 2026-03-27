@@ -1,0 +1,120 @@
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import loginImg from '../assets/gambar-login-regist.jpeg';
+import { authApi } from '../api/api';
+
+const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const res = await authApi.login({ username, password });
+
+      localStorage.setItem('access_token', res.data.access_token);
+      localStorage.setItem('refresh_token', res.data.refresh_token);
+
+      navigate('/dashboard');
+    } catch (err) {
+      const msg = err?.data?.message ?? err?.data?.data?.message ?? 'Login gagal, coba lagi.';
+      setError(msg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  return (
+    <div className="min-h-screen w-full flex items-center justify-center bg-[#FDE2E4] p-4 font-sans">
+      
+      {/* Container Putih Utama */}
+      <div className="flex flex-col md:flex-row w-full max-w-5xl bg-white rounded-[40px] shadow-xl overflow-hidden min-h-[550px]">
+        
+        {/* SISI KIRI: Ilustrasi Gambar */}
+        <div className="hidden md:block md:w-1/2 relative">
+          <img 
+            src={loginImg} 
+            alt="Garden Illustration" 
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          {/* Efek lengkungan pemisah agar transisi ke form lebih halus */}
+          <div className="absolute top-0 right-0 h-full w-16 bg-white rounded-l-[100px] -mr-1"></div>
+        </div>
+
+        {/* SISI KANAN: Form Login */}
+        <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
+          <div className="max-w-md mx-auto w-full">
+            <h2 className="text-4xl font-bold text-gray-800 mb-10">Login</h2>
+            
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Field Username */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-semibold text-gray-600 ml-1">Username</label>
+                <input
+                  type="text"
+                  placeholder="Input username"
+                  className="w-full px-6 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-300 transition-all"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+
+              {/* Field Password */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-semibold text-gray-600 ml-1">Password</label>
+                <input
+                  type="password"
+                  placeholder="Input password"
+                  className="w-full px-6 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-pink-300 transition-all"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+                <div className="text-right">
+                  <button type="button" className="text-xs italic text-gray-500 hover:text-pink-600">
+                    Forgot password?
+                  </button>
+                </div>
+              </div>
+
+              {/* Error message */}
+              {error && (
+                <p className="text-sm text-red-500 text-center font-medium">{error}</p>
+              )}
+
+              {/* Tombol Login Oranye */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full py-4 mt-4 bg-[#FFB300] hover:bg-[#FFA000] text-black font-extrabold rounded-full shadow-lg transition-all active:scale-95 disabled:opacity-50"
+              >
+                {loading ? 'Logging in...' : 'Login'}
+              </button>
+            </form>
+
+            {/* Footer Form */}
+            <div className="text-center mt-10">
+              <p className="text-sm text-gray-600">
+                Don't have any account? <br />
+                <Link to="/register" className="text-purple-600 font-bold hover:underline">
+                  Register Now
+                </Link>
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default Login;
