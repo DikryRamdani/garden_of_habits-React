@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
@@ -14,9 +13,9 @@ import habitLogo from '../assets/gambar-hero-section.jpeg';
 import imgStep1 from '../assets/gambar-card-1.jpeg'; 
 import imgStep2 from '../assets/gambar-card-2.jpeg';
 import imgStep3 from '../assets/gambar-card-3.jpeg';
-import imgTimer from '../assets/gambar-card-1.jpeg'; 
-import imgGoal from '../assets/gambar-card-1.jpeg';
-import imgDash from '../assets/gambar-card-1.jpeg';
+import imgTimer from '../assets/1.png'; 
+import imgGoal from '../assets/2.png';
+import imgDash from '../assets/3.png';
 
 
 const Dashboard = () => {
@@ -192,7 +191,7 @@ const Dashboard = () => {
         <div className="relative z-10 text-center px-6">
           <h1 className="text-6xl md:text-8xl font-black text-white mb-4 drop-shadow-2xl">Habits In Bloom.</h1>
           <p className="text-xl md:text-2xl text-white font-bold mb-10 drop-shadow-lg">Turn Your Tasks into a Flourishing Digital Paradise.</p>
-          <button onClick={() => navigate('/Garden')} className="bg-[#B3529E] hover:bg-[#8e417e] text-white px-10 py-4 rounded-full font-black text-xl transition-all shadow-2xl active:scale-95">Start Growing Now</button>
+          <button onClick={() => navigate('/garden')} className="bg-[#B3529E] hover:bg-[#8e417e] text-white px-10 py-4 rounded-full font-black text-xl transition-all shadow-2xl active:scale-95">Start Growing Now</button>
         </div>
         {/* Wave Divider */}
         <div className="absolute bottom-0 w-full fill-white">
@@ -253,7 +252,6 @@ const Dashboard = () => {
           <div className="md:w-1/3">
             <h2 className="text-5xl font-black mb-6">Get In Touch!</h2>
             <div className="space-y-4 font-bold text-lg">
-              <div className="flex items-center gap-4"><FaEnvelope className="text-pink-600" /> hello@gardenofhabits.com</div>
               <div className="flex items-center gap-4"><FaMapMarkerAlt className="text-pink-600" /> Unsika, Karawang</div>
             </div>
           </div>
