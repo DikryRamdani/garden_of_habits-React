@@ -1,4 +1,4 @@
-const BASE_URL = "http://gardenofhabits.my.id/api";
+const BASE_URL = "/api";
 
 const apiFetch = async (endpoint, options = {}) => {
   const token = localStorage.getItem("access_token");
