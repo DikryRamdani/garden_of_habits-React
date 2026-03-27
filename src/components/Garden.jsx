@@ -208,13 +208,13 @@ const GardenDashboard = () => {
 
   const growth = getGrowthData(currentLevel);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-emerald-50">
-        <Loader2 className="animate-spin text-emerald-600" size={48} />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center bg-emerald-50">
+  //       <Loader2 className="animate-spin text-emerald-600" size={48} />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="h-screen w-full overflow-y-auto md:overflow-hidden font-sans flex flex-col bg-[#FDE2E4]">
