@@ -166,15 +166,20 @@ const Dashboard = () => {
 
           {/* Action Buttons */}
           <div className="flex items-center gap-4">
-            {avatarSrc ? (
-              <img
-                src={avatarSrc}
-                alt="Profile"
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <span>User</span>
-            )}
+            <button 
+              onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+              className="w-10 h-10 bg-white rounded-full shadow-xl hover:scale-105 transition flex items-center justify-center overflow-hidden border-2 border-emerald-100 cursor-pointer"
+            >
+              {avatarSrc ? (
+                <img
+                  src={avatarSrc}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span>User</span>
+              )}
+            </button>
 
             {user && (
               <button 
