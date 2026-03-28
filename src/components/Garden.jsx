@@ -75,6 +75,9 @@ const GardenDashboard = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const profileMenuRef = useRef(null);
+  const avatarSrc = normalizeImageUrl(
+  user?.profile_picture_url || user?.profile_picture
+);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -293,20 +296,15 @@ const GardenDashboard = () => {
           </div>
           
           <div className="relative" ref={profileMenuRef}>
-            <button 
-              onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-              className="w-10 h-10 bg-white rounded-full shadow-xl hover:scale-105 transition flex items-center justify-center overflow-hidden border-2 border-emerald-100 cursor-pointer"
-            >
-              {user?.profile_picture_url || user?.profile_picture ? (
+            {avatarSrc ? (
                 <img
-                  src={normalizeImageUrl(user.profile_picture_url || user.profile_picture)}
+                  src={avatarSrc}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
               ) : (
                 <span>User</span>
               )}
-            </button>
 
             {isProfileMenuOpen && (
               <div className="absolute right-0 mt-3 w-48 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-emerald-100 py-3 px-2 flex flex-col gap-1 z-[100] animate-in fade-in slide-in-from-top-2 duration-200">
