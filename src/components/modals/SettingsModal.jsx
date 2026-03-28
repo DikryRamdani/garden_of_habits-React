@@ -96,9 +96,9 @@ const SettingsModal = ({ isOpen, onClose, user, onSuccess }) => {
     }
   };
 
-  const hasAvatar = !!user.profile_picture;
+  const hasAvatar = !!(user.profile_picture_url || user.profile_picture);
   const avatarUrl = normalizeImageUrl(
-    user?.profile_picture_url || user?.profile_picture
+    user.profile_picture_url || user.profile_picture
   );
 
   return (
