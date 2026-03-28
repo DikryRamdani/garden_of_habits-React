@@ -2,6 +2,42 @@ import React, { useState, useRef } from 'react';
 import { X, Upload, Check, Lock, ChevronRight, Camera } from 'lucide-react';
 import { userApi } from '../../api/api';
 
+const API_ORIGIN = 'https://gardenofhabits.my.id';
+
+const normalizeImageUrl = (value) => {
+  if (!value) return '';
+
+  if (value.startsWith('http://127.0.0.1:8000')) {
+    return value.replace('http://127.0.0.1:8000', API_ORIGIN);
+  }
+
+  if (value.startsWith('https://127.0.0.1:8000')) {
+    return value.replace('https://127.0.0.1:8000', API_ORIGIN);
+  }
+
+  if (value.startsWith('http://localhost:8000')) {
+    return value.replace('http://localhost:8000', API_ORIGIN);
+  }
+
+  if (value.startsWith('https://localhost:8000')) {
+    return value.replace('https://localhost:8000', API_ORIGIN);
+  }
+
+  if (value.startsWith('http://localhost')) {
+    return value.replace('http://localhost', API_ORIGIN);
+  }
+
+  if (value.startsWith('https://localhost')) {
+    return value.replace('https://localhost', API_ORIGIN);
+  }
+
+  if (value.startsWith('http://') || value.startsWith('https://')) {
+    return value;
+  }
+
+  return `${API_ORIGIN}/${value.replace(/^\/+/, '')}`;
+};
+
 const SettingsModal = ({ isOpen, onClose, user, onSuccess }) => {
   const [activeTab, setActiveTab] = useState('profile'); // 'profile' | 'security'
   const [loading, setLoading] = useState(false);
@@ -61,9 +97,9 @@ const SettingsModal = ({ isOpen, onClose, user, onSuccess }) => {
   };
 
   const hasAvatar = !!user.profile_picture;
-  const avatarUrl = user.profile_picture 
-    ? (user.profile_picture.startsWith('http') ? user.profile_picture : `http://127.0.0.1:8000/${user.profile_picture}`) 
-    : null;
+  const avatarUrl = normalizeImageUrl(
+    user?.profile_picture_url || user?.profile_picture
+  );
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 md:p-6 bg-emerald-950/40 backdrop-blur-sm animate-in fade-in duration-200">
