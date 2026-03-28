@@ -17,40 +17,35 @@ const Settings = () => {
   const [success, setSuccess] = useState('');
 
     useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        setLoading(true);
+      const fetchProfile = async () => {
+        try {
+          setLoading(true);
 
-        const res = await userApi.getProfile();
-        const user = res?.data || {};
+          const res = await userApi.getProfile();
+          const user = res?.data || {};
 
-        setFormData({
-          username: user.username || '',
-          email: user.email || '',
-          password: '',
-        });
+          setFormData({
+            username: user.username || '',
+            email: user.email || '',
+            password: '',
+          });
 
-        setProfilePicturePreview(
-          user.profile_picture
-            ? `https://gardenofhabits.my.id/${user.profile_picture.replace(/^\/+/, '')}`
-            : ''
-        );
-                const avatarUrl =
-          user.profile_picture_url ||
-          (user.profile_picture
-            ? `https://gardenofhabits.my.id/${user.profile_picture.replace(/^\/+/, '')}`
-            : '');
+          const avatarUrl =
+            user.profile_picture_url ||
+            (user.profile_picture
+              ? `https://gardenofhabits.my.id/${user.profile_picture.replace(/^\/+/, '')}`
+              : '');
 
-        setProfilePicturePreview(avatarUrl);
-      } catch (err) {
-        setError('Gagal memuat data pengguna. Pastikan Anda sudah login.');
-      } finally {
-        setLoading(false);
-      }
-    };
+          setProfilePicturePreview(avatarUrl);
+        } catch (err) {
+          setError('Gagal memuat data pengguna. Pastikan Anda sudah login.');
+        } finally {
+          setLoading(false);
+        }
+      };
 
-    fetchProfile();
-  }, []);
+      fetchProfile();
+    }, []);
 
 
   const handleChange = (e) => {
