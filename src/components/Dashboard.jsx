@@ -17,6 +17,42 @@ import imgTimer from '../assets/1.png';
 import imgGoal from '../assets/2.png';
 import imgDash from '../assets/3.png';
 
+const API_ORIGIN = 'https://gardenofhabits.my.id';
+
+const normalizeImageUrl = (value) => {
+  if (!value) return '';
+
+  if (value.startsWith('http://127.0.0.1:8000')) {
+    return value.replace('http://127.0.0.1:8000', API_ORIGIN);
+  }
+
+  if (value.startsWith('https://127.0.0.1:8000')) {
+    return value.replace('https://127.0.0.1:8000', API_ORIGIN);
+  }
+
+  if (value.startsWith('http://localhost:8000')) {
+    return value.replace('http://localhost:8000', API_ORIGIN);
+  }
+
+  if (value.startsWith('https://localhost:8000')) {
+    return value.replace('https://localhost:8000', API_ORIGIN);
+  }
+
+  if (value.startsWith('http://localhost')) {
+    return value.replace('http://localhost', API_ORIGIN);
+  }
+
+  if (value.startsWith('https://localhost')) {
+    return value.replace('https://localhost', API_ORIGIN);
+  }
+
+  if (value.startsWith('http://') || value.startsWith('https://')) {
+    return value;
+  }
+
+  return `${API_ORIGIN}/${value.replace(/^\/+/, '')}`;
+};
+
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -128,23 +164,18 @@ const Dashboard = () => {
           {/* Action Buttons */}
           <div className="flex items-center gap-4">
             <button 
-              onClick={() => setIsSettingsModalOpen(true)} 
-              className={`w-10 h-10 rounded-full transition-all flex items-center justify-center overflow-hidden border-2 ${isScrolled ? 'bg-green-100 text-green-800 border-green-200 shadow-md' : 'bg-white/20 text-white border-white/30'} hover:scale-105`}
+              onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+              className="w-10 h-10 bg-white rounded-full shadow-xl hover:scale-105 transition flex items-center justify-center overflow-hidden border-2 border-emerald-100 cursor-pointer"
             >
               {user?.profile_picture_url || user?.profile_picture ? (
-                  <img
-                    src={
-                      user.profile_picture_url ||
-                      (user.profile_picture.startsWith("http")
-                        ? user.profile_picture
-                        : `https://gardenofhabits.my.id/${user.profile_picture}`)
-                    }
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <span>User</span>
-                )}
+                <img
+                  src={normalizeImageUrl(user.profile_picture_url || user.profile_picture)}
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span>User</span>
+              )}
             </button>
 
             {user && (

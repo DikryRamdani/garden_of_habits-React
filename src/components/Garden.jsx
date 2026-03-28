@@ -15,6 +15,42 @@ import textLogo from '../assets/logo-tulisan.png';
 import gardenBg from '../assets/gambar-login-regist.jpeg'; 
 import groundBg from '../assets/tanah.png'; 
 
+const API_ORIGIN = 'https://gardenofhabits.my.id';
+
+const normalizeImageUrl = (value) => {
+  if (!value) return '';
+
+  if (value.startsWith('http://127.0.0.1:8000')) {
+    return value.replace('http://127.0.0.1:8000', API_ORIGIN);
+  }
+
+  if (value.startsWith('https://127.0.0.1:8000')) {
+    return value.replace('https://127.0.0.1:8000', API_ORIGIN);
+  }
+
+  if (value.startsWith('http://localhost:8000')) {
+    return value.replace('http://localhost:8000', API_ORIGIN);
+  }
+
+  if (value.startsWith('https://localhost:8000')) {
+    return value.replace('https://localhost:8000', API_ORIGIN);
+  }
+
+  if (value.startsWith('http://localhost')) {
+    return value.replace('http://localhost', API_ORIGIN);
+  }
+
+  if (value.startsWith('https://localhost')) {
+    return value.replace('https://localhost', API_ORIGIN);
+  }
+
+  if (value.startsWith('http://') || value.startsWith('https://')) {
+    return value;
+  }
+
+  return `${API_ORIGIN}/${value.replace(/^\/+/, '')}`;
+};
+
 const GardenDashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
@@ -263,12 +299,7 @@ const GardenDashboard = () => {
             >
               {user?.profile_picture_url || user?.profile_picture ? (
                 <img
-                  src={
-                    user.profile_picture_url ||
-                    (user.profile_picture.startsWith("http")
-                      ? user.profile_picture
-                      : `https://gardenofhabits.my.id/${user.profile_picture}`)
-                  }
+                  src={normalizeImageUrl(user.profile_picture_url || user.profile_picture)}
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
