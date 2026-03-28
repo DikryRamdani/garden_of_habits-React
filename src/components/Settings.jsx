@@ -16,17 +16,27 @@ const Settings = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  useEffect(() => {
+    useEffect(() => {
     const fetchProfile = async () => {
       try {
         setLoading(true);
-        const data = await userApi.getProfile();
+
+        const res = await userApi.getProfile();
+        const user = res?.data || res;
+
         setFormData({
-          username: data.username || '',
-          email: data.email || '',
+          username: user.username || '',
+          email: user.email || '',
           password: '',
         });
-        setProfilePicturePreview(data.profile_picture || '');
+
+        const avatarUrl =
+          user.profile_picture_url ||
+          (user.profile_picture
+            ? `https://gardenofhabits.my.id/${user.profile_picture.replace(/^\/+/, '')}`
+            : '');
+
+        setProfilePicturePreview(avatarUrl);
       } catch (err) {
         setError('Gagal memuat data pengguna. Pastikan Anda sudah login.');
       } finally {
@@ -36,6 +46,7 @@ const Settings = () => {
 
     fetchProfile();
   }, []);
+
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;

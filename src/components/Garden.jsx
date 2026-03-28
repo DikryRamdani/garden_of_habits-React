@@ -261,10 +261,19 @@ const GardenDashboard = () => {
               onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
               className="w-10 h-10 bg-white rounded-full shadow-xl hover:scale-105 transition flex items-center justify-center overflow-hidden border-2 border-emerald-100 cursor-pointer"
             >
-              {user?.profile_picture ? (
-                <img src={user.profile_picture.startsWith('http') ? user.profile_picture : `http://127.0.0.1:8000/${user.profile_picture}`} alt="Profile" className="w-full h-full object-cover" />
+              {user?.profile_picture_url || user?.profile_picture ? (
+                <img
+                  src={
+                    user.profile_picture_url ||
+                    (user.profile_picture.startsWith("http")
+                      ? user.profile_picture
+                      : `https://gardenofhabits.my.id/${user.profile_picture}`)
+                  }
+                  alt="Profile"
+                  className="w-full h-full object-cover"
+                />
               ) : (
-                <User size={20} className="text-slate-600" />
+                <FaUser size={18} />
               )}
             </button>
 

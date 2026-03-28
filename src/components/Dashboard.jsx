@@ -131,15 +131,20 @@ const Dashboard = () => {
               onClick={() => setIsSettingsModalOpen(true)} 
               className={`w-10 h-10 rounded-full transition-all flex items-center justify-center overflow-hidden border-2 ${isScrolled ? 'bg-green-100 text-green-800 border-green-200 shadow-md' : 'bg-white/20 text-white border-white/30'} hover:scale-105`}
             >
-              {user?.profile_picture ? (
-                <img 
-                  src={user.profile_picture.startsWith('http') ? user.profile_picture : `http://127.0.0.1:8000/${user.profile_picture}`} 
-                  alt="Profile" 
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <FaUser size={18} />
-              )}
+              {user?.profile_picture_url || user?.profile_picture ? (
+                  <img
+                    src={
+                      user.profile_picture_url ||
+                      (user.profile_picture.startsWith("http")
+                        ? user.profile_picture
+                        : `https://gardenofhabits.my.id/${user.profile_picture}`)
+                    }
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <FaUser size={18} />
+                )}
             </button>
 
             {user && (
