@@ -22,7 +22,7 @@ const Settings = () => {
         setLoading(true);
 
         const res = await userApi.getProfile();
-        const user = res?.data || res;
+        const user = res?.data || {};
 
         setFormData({
           username: user.username || '',
@@ -30,7 +30,12 @@ const Settings = () => {
           password: '',
         });
 
-        const avatarUrl =
+        setProfilePicturePreview(
+          user.profile_picture
+            ? `https://gardenofhabits.my.id/${user.profile_picture.replace(/^\/+/, '')}`
+            : ''
+        );
+                const avatarUrl =
           user.profile_picture_url ||
           (user.profile_picture
             ? `https://gardenofhabits.my.id/${user.profile_picture.replace(/^\/+/, '')}`
