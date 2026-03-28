@@ -273,7 +273,7 @@ const GardenDashboard = () => {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <FaUser size={18} />
+                <span>User</span>
               )}
             </button>
 
