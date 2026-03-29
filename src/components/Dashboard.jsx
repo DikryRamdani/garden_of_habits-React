@@ -123,7 +123,7 @@ const Dashboard = () => {
       window.alert('Silakan isi pesan terlebih dahulu.');
       return;
     }
-    const phone = '6285947271670';
+    const phone = '6285947271760';
     const text = `Email: ${contactEmail || '-'}%0A%0AMessage: ${contactMessage}`;
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
